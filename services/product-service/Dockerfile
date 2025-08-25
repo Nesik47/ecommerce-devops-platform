@@ -4,7 +4,13 @@ FROM node:18-alpine
 # Set working directory inside container
 WORKDIR /app
 
-# Copy application code (server.js doesn't need external dependencies)
+# Copy package.json for dependency installation
+COPY package*.json ./
+
+# Install dependencies
+RUN npm install --omit=dev
+
+# Copy application code
 COPY server.js ./
 
 # Create non-root user for security
